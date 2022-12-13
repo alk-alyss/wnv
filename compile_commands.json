@@ -1,0 +1,53 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Iinclude",
+      "-std=c++20",
+      "-g3",
+      "-O0",
+      "-c",
+      "-o",
+      "build/debug/objects.o",
+      "src/objects.cpp"
+    ],
+    "directory": "/home/alkinoos/Projects/wnv",
+    "file": "/home/alkinoos/Projects/wnv/src/objects.cpp",
+    "output": "/home/alkinoos/Projects/wnv/build/debug/objects.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Iinclude",
+      "-std=c++20",
+      "-g3",
+      "-O0",
+      "-c",
+      "-o",
+      "build/debug/map.o",
+      "src/map.cpp"
+    ],
+    "directory": "/home/alkinoos/Projects/wnv",
+    "file": "/home/alkinoos/Projects/wnv/src/map.cpp",
+    "output": "/home/alkinoos/Projects/wnv/build/debug/map.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Iinclude",
+      "-std=c++20",
+      "-g3",
+      "-O0",
+      "-c",
+      "-o",
+      "build/debug/gui.o",
+      "src/gui.cpp"
+    ],
+    "directory": "/home/alkinoos/Projects/wnv",
+    "file": "/home/alkinoos/Projects/wnv/src/gui.cpp",
+    "output": "/home/alkinoos/Projects/wnv/build/debug/gui.o"
+  }
+]
