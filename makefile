@@ -25,9 +25,9 @@ vpath %.h $(INCDIRS)
 # Compiler options
 WFLAGS := -Wall
 
-# -Wl, -subsystem, windows gets rid of the console window
+# make sure to compile with x64 on windows and no console window
 ifeq ($(OS), Windows_NT)
-	CXXFLAGS += -m64 -Wl, -subsystem, windows
+	CXXFLAGS += -m64 -Wl, -subsystem windows
 endif
 
 CXXFLAGS += $(WFLAGS) $(addprefix -I, $(INCDIRS)) -std=c++20
@@ -37,7 +37,7 @@ ifeq ($(OS), Windows_NT)
 	LDFLAGS += -lmingw -lSDL2main
 endif
 
-LDFLAGS += $(addprefix -L, $(LIBDIRS)) -lSDL2 -lSDL2_ttf -lm
+LDFLAGS += $(addprefix -L, $(LIBDIRS)) -lSDL2 -lSDL2_ttf -lm -Wl,-rpath,'$$ORIGIN/../../lib'
 
 # Source, Object and Dependency definitions
 SRCS := $(shell find $(SRC) -name *.cpp -or -name *.c)
