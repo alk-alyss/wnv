@@ -92,6 +92,10 @@ std::vector<Point> Game::getPossibleMoves(Point position) {
 	return moves;
 }
 
+bool isObjectNPC(Object* o) {
+	return typeid(*o) == typeid(Werewolf) || typeid(*o) == typeid(Vampire);
+}
+
 void Game::moveEntities() {
 	/*
 	   Move all the entities on the map, except for players
@@ -102,7 +106,7 @@ void Game::moveEntities() {
 	// Make a list with all the entities that are going to move
 	for (auto& it : map) {
 		Object* o = it.second;
-		if (!(typeid(*o) == typeid(Werewolf) || typeid(*o) == typeid(Vampire))) continue;
+		if (!isObjectNPC(o)) continue;
 
 		Entity* e = (Entity*) o;
 
@@ -186,10 +190,6 @@ std::vector<Entity*> Game::getEntities(Point position) {
 	}
 
 	return entities;
-}
-
-bool isObjectNPC(Object* o) {
-	return typeid(*o) == typeid(Werewolf) || typeid(*o) == typeid(Vampire);
 }
 
 void Game::interactEntities() {
