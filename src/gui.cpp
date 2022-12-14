@@ -131,25 +131,34 @@ void Gui::drawMap(void){
 
 	SDL_GetWindowSize(window, &windowSize[0], &windowSize[1]);
 
+	int xDivisions = windowSize[0] / mapWidth;
+	int yDivisions = windowSize[1] / mapHeight;
+
+	int squareSize = std::min(xDivisions, yDivisions);
+
 	int mapSize = std::min(windowSize[0], windowSize[1]);
-	int squareSize = mapSize / std::max(mapWidth, mapHeight);
+	/* int squareSize = mapSize / std::max(mapWidth, mapHeight); */
 
-	int gap = floor(std::max(windowSize[0], windowSize[1]) - std::min(mapWidth, mapHeight)*squareSize);
-	int offset = gap / 2;
+	int xGap = floor(windowSize[0] - mapWidth*squareSize);
+	int yGap = floor(windowSize[1] - mapHeight*squareSize);
 
-	bool xOffset = floor(abs(windowSize[0] - mapWidth*squareSize)) > squareSize;
-	bool yOffset = floor(abs(windowSize[1] - mapHeight*squareSize)) > squareSize;
+	/* bool xOffset = floor(abs(windowSize[0] - mapWidth*squareSize)) > squareSize; */
+	/* bool yOffset = floor(abs(windowSize[1] - mapHeight*squareSize)) > squareSize; */
 
-	xOffset = false;
-	yOffset = false;
+	/* int offset = 0; */
+	int xOffset = xGap/2;
+	int yOffset = yGap/2;
+
+	/* xOffset = false; */
+	/* yOffset = false; */
 
 	for(int y=0; y<mapHeight; y++){
 		for(int x=0; x<mapWidth; x++){
 			Point position = Point(x, y);
 
 			SDL_Rect squareRect = {
-				x*squareSize + (xOffset ? offset : 0),
-				y*squareSize + (yOffset ? offset : 0),
+				x*squareSize + xOffset,
+				y*squareSize + yOffset,
 				squareSize,
 				squareSize
 			};

@@ -49,18 +49,22 @@ std::string getTeam() {
 SDL_Color bg = BLACK;
 
 int main(int argc, char* argv[]) {
-	/* srand(time(NULL)); */
-	srand(0);
+	srand(time(NULL));
+	/* srand(0); */
 
-	int width = 15;
-	int height = 15;
+	int width = 16;
+	int height = 10;
 	std::string playerTeam = "Werewolves";
+
+	width = getWidth();
+	height = getHeight();
+	playerTeam = getTeam();
 
 	Map* gameMap = new Map(width, height, playerTeam);
 
 	Gui* gui = nullptr;
 	try {
-		gui = new Gui(gameMap, 854, 480);
+		gui = new Gui(gameMap, 856, 480);
 	} catch (guiException& e) {
 		std::cout << e.what();
 
