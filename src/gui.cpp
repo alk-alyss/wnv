@@ -5,7 +5,7 @@
 	CONSTRUCTOR - DESTRUCTOR
 */
 
-Gui::Gui(Map* _map, const int width, const int height): map(_map){
+Gui::Gui(Game* _game, const int width, const int height): game(_game){
 	/*
 	Initialise SDL components (window, renderer) + Font loading
 	*/
@@ -41,10 +41,11 @@ Gui::Gui(Map* _map, const int width, const int height): map(_map){
 	if(!(renderer = SDL_CreateRenderer(window, -1, rendererFlags)))
 		throw guiException("Failed to create renderer!", SDLFAIL);
 
-	mapWidth = map->getWidth();
-	mapHeight = map->getHeight();
+	mapWidth = game->getWidth();
+	mapHeight = game->getHeight();
 
-	drawStartup();
+	prepareScene(BLACK);
+	presentScene();
 }
 
 Gui::~Gui(void){
@@ -104,16 +105,6 @@ void Gui::drawText(const std::string text, SDL_Rect rect, SDL_Color color){
 }
 
 /*
-	DRAW Startup
-*/
-
-void Gui::drawStartup(void){
-	prepareScene(BLACK);
-	presentScene();
-}
-
-
-/*
 	DRAW MAP
 */
 
@@ -126,9 +117,10 @@ SDL_Color vampireColor = {255, 0, 0};
 SDL_Color werewolfColor = {145, 5, 255};
 SDL_Color playerColor = {0, 255, 0};
 
-void Gui::drawMap(void){
-	std::unordered_map<Point, Object*> objects = map->getObjects();
+void Gui::drawGame(void){
+	std::unordered_map<Point, Object*> objects = game->getObjects();
 
+	int windowSize[2];
 	SDL_GetWindowSize(window, &windowSize[0], &windowSize[1]);
 
 	int xDivisions = windowSize[0] / mapWidth;
@@ -136,21 +128,11 @@ void Gui::drawMap(void){
 
 	int squareSize = std::min(xDivisions, yDivisions);
 
-	int mapSize = std::min(windowSize[0], windowSize[1]);
-	/* int squareSize = mapSize / std::max(mapWidth, mapHeight); */
-
 	int xGap = floor(windowSize[0] - mapWidth*squareSize);
 	int yGap = floor(windowSize[1] - mapHeight*squareSize);
 
-	/* bool xOffset = floor(abs(windowSize[0] - mapWidth*squareSize)) > squareSize; */
-	/* bool yOffset = floor(abs(windowSize[1] - mapHeight*squareSize)) > squareSize; */
-
-	/* int offset = 0; */
 	int xOffset = xGap/2;
 	int yOffset = yGap/2;
-
-	/* xOffset = false; */
-	/* yOffset = false; */
 
 	for(int y=0; y<mapHeight; y++){
 		for(int x=0; x<mapWidth; x++){
@@ -199,7 +181,7 @@ void Gui::drawMap(void){
 			}
 			else if (typeid(*e) == typeid(Player)) {
 				color = playerColor;
-				text = map->getPlayerTeam().substr(0, 1);
+				text = game->getPlayerTeam().substr(0, 1);
 			}
 
 			drawText(text, objectRect, color);
@@ -223,16 +205,16 @@ void Gui::events(void){
 				SDL_Keycode key = event.key.keysym.sym;
 				switch (key) {
 					case SDLK_UP:
-						map->movePlayer(NORTH);
+						game->movePlayer(NORTH);
 						break;
 					case SDLK_DOWN:
-						map->movePlayer(SOUTH);
+						game->movePlayer(SOUTH);
 						break;
 					case SDLK_LEFT:
-						map->movePlayer(WEST);
+						game->movePlayer(WEST);
 						break;
 					case SDLK_RIGHT:
-						map->movePlayer(EAST);
+						game->movePlayer(EAST);
 						break;
 					case SDLK_SPACE:
 						PAUSED = !PAUSED;

@@ -1,4 +1,4 @@
-#include "map.h"
+#include "game.h"
 #include "gui.h"
 
 int getWidth() {
@@ -50,21 +50,20 @@ SDL_Color bg = BLACK;
 
 int main(int argc, char* argv[]) {
 	srand(time(NULL));
-	/* srand(0); */
 
 	int width = 16;
-	int height = 10;
+	int height = 9;
 	std::string playerTeam = "Werewolves";
 
 	width = getWidth();
 	height = getHeight();
 	playerTeam = getTeam();
 
-	Map* gameMap = new Map(width, height, playerTeam);
+	Game* game = new Game(width, height, playerTeam);
 
 	Gui* gui = nullptr;
 	try {
-		gui = new Gui(gameMap, 856, 480);
+		gui = new Gui(game, 856, 480);
 	} catch (guiException& e) {
 		std::cout << e.what();
 
@@ -87,7 +86,7 @@ int main(int argc, char* argv[]) {
 		if (!PAUSED) {
 			gui->prepareScene(bg);
 
-			int result = gameMap->update();
+			int result = game->update();
 
 			if (result == WEREWOLVES) {
 				std::cout << "Werewolves win" << std::endl;
@@ -97,7 +96,7 @@ int main(int argc, char* argv[]) {
 				RUNNING = false;
 			}
 
-			gui->drawMap();
+			gui->drawGame();
 
 			gui->presentScene();
 		}

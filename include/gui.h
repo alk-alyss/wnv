@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include "map.h"
+#include "game.h"
 
 #define WHITE {255, 255, 255, 255}
 #define BLACK {0, 0, 0, 255}
@@ -15,17 +15,13 @@ class Gui {
 		SDL_Renderer* renderer;
 		TTF_Font *font;
 
-		Map* map;
+		Game* game;
 
 		int mapWidth;
 		int mapHeight;
 
-		int mapSize;
-		int squareSize;
-		int windowSize[2] = {0};
-
 	public:
-		Gui(Map* _map, const int width, const int height);
+		Gui(Game* _game, const int width, const int height);
 		~Gui(void);
 		void prepareScene(const SDL_Color bg);
 		void presentScene(void);
@@ -35,7 +31,7 @@ class Gui {
 		void drawText(const std::string text, SDL_Rect rect, SDL_Color color);
 
 		void drawStartup(void);
-		void drawMap(void);
+		void drawGame(void);
 
 		void events(void);
 };

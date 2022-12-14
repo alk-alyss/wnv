@@ -13,7 +13,7 @@ enum {NORTH, SOUTH, EAST, WEST};
 /*
    Game map class
 */
-class Map {
+class Game {
 	private:
 		int width;
 		int height;
@@ -30,7 +30,7 @@ class Map {
 		bool isValidPosition(Point position);
 
 	public:
-		Map(int _width, int _height, std::string _playerTeam);
+		Game(int _width, int _height, std::string _playerTeam);
 
 		std::vector<Point> getPossibleMoves(Point position);
 

@@ -1,8 +1,8 @@
-#include "map.h"
+#include "game.h"
 
 #include <stdexcept>
 
-Point Map::getEmptyPos() {
+Point Game::getEmptyPos() {
 	/*
 		Find empty spot in game map
 	*/
@@ -14,7 +14,7 @@ Point Map::getEmptyPos() {
 	return pos;
 }
 
-Map::Map(int _width, int _height, std::string _playerTeam):
+Game::Game(int _width, int _height, std::string _playerTeam):
 	width(_width), height(_height), playerTeam(_playerTeam) {
 	/*
 	   Generate new random map with dimensions width * height and player on team playerTeam
@@ -53,7 +53,7 @@ Map::Map(int _width, int _height, std::string _playerTeam):
 	map[playerPos] = player;
 }
 
-bool Map::isValidPosition(Point position) {
+bool Game::isValidPosition(Point position) {
 	/*
 	   Check if position is within the limits of the map
 	*/
@@ -61,7 +61,7 @@ bool Map::isValidPosition(Point position) {
 	return !(position.x < 0 || position.x >= width || position.y < 0 || position.y >= height);
 }
 
-std::vector<Point> Map::getPossibleMoves(Point position) {
+std::vector<Point> Game::getPossibleMoves(Point position) {
 	/*
 	   Find all possible moves from position
 	*/
@@ -92,7 +92,7 @@ std::vector<Point> Map::getPossibleMoves(Point position) {
 	return moves;
 }
 
-void Map::moveEntities() {
+void Game::moveEntities() {
 	/*
 	   Move all the entities on the map, except for players
 	*/
@@ -120,7 +120,7 @@ void Map::moveEntities() {
 	}
 }
 
-void Map::movePlayer(int direction) {
+void Game::movePlayer(int direction) {
 	if (PAUSED) return;
 
 	Point playerPosition = player->getPos();
@@ -154,7 +154,7 @@ void Map::movePlayer(int direction) {
 	}
 }
 
-std::unordered_map<Point, Object*> Map::getObjects() {
+std::unordered_map<Point, Object*> Game::getObjects() {
 	/*
 	   Return the hashmap of the objects on the game map
 	*/
@@ -162,7 +162,7 @@ std::unordered_map<Point, Object*> Map::getObjects() {
 	return map;
 }
 
-std::vector<Entity*> Map::getEntities(Point position) {
+std::vector<Entity*> Game::getEntities(Point position) {
 	/*
 	   Return a list of all the entities around a position on the map
 	*/
@@ -192,7 +192,7 @@ bool isObjectNPC(Object* o) {
 	return typeid(*o) == typeid(Werewolf) || typeid(*o) == typeid(Vampire);
 }
 
-void Map::interactEntities() {
+void Game::interactEntities() {
 	/*
 	   Make entities interact with each other where possible
 	*/
@@ -226,7 +226,7 @@ void Map::interactEntities() {
 	}
 }
 
-int Map::update() {
+int Game::update() {
 	/*
 	   Update game map
 	*/
@@ -246,7 +246,7 @@ int Map::update() {
 	return 0;
 }
 
-void Map::print() {
+void Game::print() {
 	/*
 	   Print game map
 	*/
