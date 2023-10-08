@@ -30,7 +30,7 @@ ifeq ($(OS), Windows_NT)
 	CXXFLAGS += -m64 -Wl, -subsystem windows
 endif
 
-CXXFLAGS += $(WFLAGS) $(addprefix -I, $(INCDIRS)) -std=c++20
+CXXFLAGS += $(WFLAGS) $(addprefix -I, $(INCDIRS)) -std=c++17
 
 # Linker options
 ifeq ($(OS), Windows_NT)
